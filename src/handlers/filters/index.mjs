@@ -13,6 +13,6 @@ router.get("/",(req,res)=>{
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
-router.post("/upload",upload.single("images"),applyFiltersHandler);
+router.post("/",upload.single("images"),applyFiltersHandler);
 
 export default router;

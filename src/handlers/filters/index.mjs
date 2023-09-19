@@ -8,6 +8,6 @@ router.get("/",(req,res)=>{
 })
 const storage = multer.memoryStorage();
 const upload = multer({storage})
-router.post("/",upload.single("files"),applyFiltersHandler);
+router.post("/",upload.array("files[]"),applyFiltersHandler);
 
 export default router;

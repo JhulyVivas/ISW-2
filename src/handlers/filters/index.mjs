@@ -1,13 +1,13 @@
-import {Router} from "express";
-import applyFiltersHandler from "./applyFiltersHandler.mjs";
-import multer from "multer";
+import { Router } from 'express';
+import multer from 'multer';
+import applyFiltersHandler from './applyFiltersHandler.mjs';
 
 const router = Router();
-router.get("/",(req,res)=>{
-    res.send("ok images GET");
-})
+router.get('/', (req, res) => {
+  res.send('ok images GET');
+});
 const storage = multer.memoryStorage();
-const upload = multer({storage})
-router.post("/",upload.array("files[]"),applyFiltersHandler);
+const upload = multer({ storage });
+router.post('/', upload.array('files[]'), applyFiltersHandler);
 
 export default router;

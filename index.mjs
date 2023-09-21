@@ -21,6 +21,7 @@ app.use((error, req, res, next) => {
     const { payload } = err.output;
     return res.status(statusCode).json(payload);
   }
+  return next;
 });
 
 const startServer = async () => {

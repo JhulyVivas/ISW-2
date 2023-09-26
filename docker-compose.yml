@@ -6,7 +6,7 @@ services:
     ports:
       - 3000:3001
     networks:
-      - processor-network  # Define the network here
+      - processor-network
     depends_on:
       minio:
         condition: service_healthy

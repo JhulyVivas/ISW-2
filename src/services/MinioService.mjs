@@ -1,13 +1,13 @@
 class MinioService {
-    conn = null;
+  conn = null;
 
-    constructor() {
+  constructor() {
 
-    }
+  }
 
-    async saveImage(image){
-        
-    }
+  async saveImage(image) {
+
+  }
 }
 
 export default MinioService;

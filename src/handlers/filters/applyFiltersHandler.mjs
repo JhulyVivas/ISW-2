@@ -1,7 +1,6 @@
 import Boom from '@hapi/boom';
 import HttpStatusCodes from 'http-status-codes';
 
-
 const applyFiltersHandler = async (req, res, next) => {
   try {
     // eslint-disable-next-line

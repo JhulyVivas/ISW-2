@@ -8,7 +8,7 @@ import buildContainer from './src/container/buildContainer.mjs';
 
 const app = Express();
 app.use(bodyParser.json());
-app.use(buildContainer());
+app.use(buildContainer);
 
 app.get('/', (req, res) => {
   res.send('ok');
@@ -21,6 +21,7 @@ app.use((error, _req, res, next) => {
     const err = Boom.isBoom(error) ? error : Boom.internal(error);
     const { statusCode } = err.output;
     const { payload } = err.output;
+    payload.stack = error.stack;
     return res.status(statusCode).json(payload);
   }
   return next();

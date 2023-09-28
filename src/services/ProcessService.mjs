@@ -1,9 +1,12 @@
 import Joi from 'joi';
 import Boom from '@hapi/boom';
-import { GREYSCALE_FILTER, NEGATIVE_FILTER, BLUR_FILTER } from '../../commons/constans.mjs';
+import { GREYSCALE_FILTER, NEGATIVE_FILTER, BLUR_FILTER } from '../commons/constans.mjs';
 
 class ProcessService {
   processRepository = null;
+
+  minioService = null;
+
 
   payloadValidation = Joi.object({
     filters: Joi.array().required().min(1)
@@ -22,7 +25,17 @@ class ProcessService {
     } catch (error) {
       throw Boom.badData(error.message, { error });
     }
-    const Process = await this.processRepository.save(payload);
+
+    const { images, filters } = payload;
+
+    const Process = await this.processRepository.save({ filters });
+
+    const imagePromises = images.map((image) => this.minioService.saveImage(image));
+
+    const imageNames = await Promise.all(imagePromises);
+
+    console.log(imageNames);
+
     return Process;
   }
 }

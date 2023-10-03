@@ -7,7 +7,6 @@ class ProcessService {
 
   minioService = null;
 
-
   payloadValidation = Joi.object({
     filters: Joi.array().required().min(1)
       .items(Joi.string().valid(NEGATIVE_FILTER, GREYSCALE_FILTER, BLUR_FILTER)),
@@ -30,11 +29,11 @@ class ProcessService {
 
     const Process = await this.processRepository.save({ filters });
 
-    const imagePromises = images.map((image) => this.minioService.saveImage(image));
+    const imagesPromises = images.map((image) => this.minioService.saveImage(image));
 
-    const imageNames = await Promise.all(imagePromises);
+    const imagesNames = await Promise.all(imagesPromises);
 
-    console.log(imageNames);
+    console.log(imagesNames);
 
     return Process;
   }

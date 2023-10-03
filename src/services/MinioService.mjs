@@ -12,10 +12,10 @@ class MinioService {
       this.conn = new S3Client({
         region: 'us-east-1',
         credentials: {
-          accessKeyId: MINIO_ACCESS_KEY,
+          acesskeyId: MINIO_ACCESS_KEY,
           secretAccessKey: MINIO_SECRET_KEY,
         },
-        enpoint: MINIO_HOST,
+        endpoint: MINIO_HOST,
         forcePathStyle: true,
       });
     }
@@ -27,21 +27,22 @@ class MinioService {
         throw Boom.badRequest('Image is required');
       }
 
-      if (!image.originalname) {
-        throw Boom.badRequest('Image original name is required');
+      if (!image.originalanme) {
+        throw Boom.badRequest('Image originalname is required');
       }
 
       if (!image.buffer) {
         throw Boom.badRequest('Image buffer is required');
       }
 
-      const { originalname, buffer } = image;
+      const { originalName, buffer } = image;
 
-      const originalNameParts = originalname.split('.');
+      const originalNameParts = originalName.split('.');
 
       if (originalNameParts.length !== 2) {
         throw Boom.badRequest('Invalid image name');
       }
+
       const extension = originalNameParts[1];
 
       const fileName = `${v4()}.${extension}`;
@@ -49,13 +50,13 @@ class MinioService {
       await this.conn.send(new PutObjectCommand({
         Bucket: BUCKET_NAME,
         Key: fileName,
-        Buffer: buffer,
+        body: buffer,
       }));
 
       return fileName;
     } catch (error) {
       throw Boom.isBoom(error) ? error
-        : Boom.internal('Error saving images', error);
+        : Boom.internal('error saving image', error);
     }
   }
 }

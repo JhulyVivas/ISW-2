@@ -27,3 +27,7 @@ jobs:
     - name: Check code lint
       run: npm run lint
       continue-on-error: false
+
+    - name: Chack code coverage
+      run: npm run test
+      continue-on-error: false
